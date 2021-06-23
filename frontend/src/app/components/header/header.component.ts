@@ -19,8 +19,13 @@ export class HeaderComponent implements OnInit {
     {
       title: 'Project',
       subMenu: [
-        "Dashboard 4",
-        "Dashboard 5"
+        "Front-end (Fruit App)",
+        "Back-end (Reddit-Backend)", 
+        "divider",
+        "Release Product (F.B.I)",
+        "Indian Railways (I.R.C.T.C)",
+        "divider",
+        "Create Project ..."
       ]
     },
     {
@@ -64,6 +69,10 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  checkDivider(checkWith: string): boolean {
+      return checkWith === 'divider';
   }
 
 }

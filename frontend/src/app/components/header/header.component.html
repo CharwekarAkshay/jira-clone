@@ -23,12 +23,22 @@
                 </div>
 
                 <mat-menu #trigger="matMenu">
-                    <button mat-menu-item *ngFor="let menu of item.subMenu ">
-                        <span>{{menu}}</span>
-                    </button>
+                    <ng-container *ngFor="let menu of item.subMenu">
+
+                        <ng-container *ngIf="checkDivider(menu)">
+                            <div>
+                                <mat-divider></mat-divider>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="!checkDivider(menu)">
+                            <button mat-menu-item>
+                                <span>{{menu}}</span>
+                            </button>
+                        </ng-container>
+
+                    </ng-container>
                 </mat-menu>
             </div>
-
         </div>
     </mat-toolbar>
 </div>
