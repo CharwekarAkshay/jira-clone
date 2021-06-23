@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use '~@angular/material' as mat;
+
+@mixin color($theme) {
+  $color-config: mat.get-color-config($theme);
+  $primary-pallette: map.get($color-config, "primary");
+  .header-menu-button:hover {
+    background-color: mat.get-color-from-palette($primary-pallette, darker);
+  }
+}
+
+

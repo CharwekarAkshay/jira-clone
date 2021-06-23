@@ -1,0 +1,21 @@
+.header {
+  ::ng-deep {
+    .mat-toolbar-row,
+    .mat-toolbar-single-row {
+      height: auto;
+    }
+  }
+  .header-name {
+    padding: 0 20px;
+  }
+  .header-menu {
+    padding: 0 20px;
+    .header-menu-button {
+      font-weight: lighter;
+      padding: 5px 10px;
+      span {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}

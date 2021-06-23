@@ -35,6 +35,9 @@
 
 @use '~@angular/material' as mat;
 
+// Custom components imports
+@use './app/components/header/header-theme' as header;
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 
@@ -264,7 +267,8 @@ $altTheme: (
   @include mat.all-component-themes($altTheme);
 }
 
-// Specific component overrides, pieces that are not in line with the general theming
+// Custom components theme
+@include header.color($theme);
 
 // Handle buttons appropriately, with respect to line-height
 .mat-raised-button, .mat-stroked-button, .mat-flat-button {
