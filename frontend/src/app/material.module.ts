@@ -3,6 +3,7 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 import { DomSanitizer } from "@angular/platform-browser";
 
 @NgModule({
@@ -11,6 +12,7 @@ import { DomSanitizer } from "@angular/platform-browser";
         MatIconModule,
         MatMenuModule,
         MatDividerModule,
+        MatButtonModule,
     ]
 })
 export class MaterialModule {

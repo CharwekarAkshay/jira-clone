@@ -4,9 +4,16 @@
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $primary-pallette: map.get($color-config, "primary");
+
   .header-menu-button:hover {
     background-color: mat.get-color-from-palette($primary-pallette, darker);
   }
+
+  .mat-menu-item:hover:not([disabled]),
+  .mat-menu-item.cdk-program-focused:not([disabled]),
+  .mat-menu-item.cdk-keyboard-focused:not([disabled]),
+  .mat-menu-item-highlighted:not([disabled]) {
+    background: mat.get-color-from-palette($primary-pallette, main) !important;
+    color: #fff;
+  }
 }
-
-
