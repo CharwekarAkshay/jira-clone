@@ -4,6 +4,7 @@
 @mixin color($theme) {
   $color-config: mat.get-color-config($theme);
   $primary-pallette: map.get($color-config, "primary");
+  $accent-pallette: map.get($color-config, "accent");
 
   .header-menu-button:hover {
     background-color: mat.get-color-from-palette($primary-pallette, darker);
@@ -15,5 +16,20 @@
   .mat-menu-item-highlighted:not([disabled]) {
     background: mat.get-color-from-palette($primary-pallette, main) !important;
     color: #fff;
+  }
+
+  .mat-form-field-outline {
+    background: mat.get-color-from-palette($primary-pallette, darker);
+  }
+
+  .mat-form-field-infix {
+    ::placeholder {
+      color: mat.get-color-from-palette($accent-pallette, main) !important;
+    }
+  }
+  .mat-form-field-wrapper {
+    .mat-icon {
+      color: mat.get-color-from-palette($accent-pallette, main) !important;
+    }
   }
 }

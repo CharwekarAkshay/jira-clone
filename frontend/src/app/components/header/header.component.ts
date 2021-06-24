@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
+  // Will come from API in future
   headerMenu = [
     {
       title: 'Dashboard',
@@ -20,7 +21,7 @@ export class HeaderComponent implements OnInit {
       title: 'Project',
       subMenu: [
         "Front-end (Fruit App)",
-        "Back-end (Reddit-Backend)", 
+        "Back-end (Reddit-Backend)",
         "divider",
         "Release Product (F.B.I)",
         "Indian Railways (I.R.C.T.C)",
@@ -63,16 +64,36 @@ export class HeaderComponent implements OnInit {
         "Dashboard 5"
       ]
     }
-    
+
   ];
 
-  constructor() { }
+  searchControl: FormControl = new FormControl();
+
+  // In future will come from backend
+  searchOptions = [
+    {
+      heading: 'Issues',
+      content: ['Issues - 1: [Frontend] Alignment issue', 'Issue-3 [UI][UX] Responsiveness of dropdown', 'Issue-4 [Database] Flyway migrations script not working', 'Issue-5 [Backend] Data Inconsistency issue'],
+    },
+    {
+      heading: 'Projects',
+      content: [
+        "Front-end (Fruit App)",
+        "Back-end (Reddit-Backend)",
+        "Release Product (F.B.I)",
+        "Indian Railways (I.R.C.T.C)",
+      ],
+    }
+  ];
+
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
   checkDivider(checkWith: string): boolean {
-      return checkWith === 'divider';
+    return checkWith === 'divider';
   }
 
 }

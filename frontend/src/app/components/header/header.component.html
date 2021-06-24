@@ -1,38 +1,63 @@
 <div class="header">
     <mat-toolbar color="primary">
-        <mat-icon svgIcon="app_switcher"></mat-icon>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
 
-        <span class="header-name">
-            Jira
-        </span>
+                <mat-icon svgIcon="app_switcher"></mat-icon>
 
-        <div class="header-menu" fxLayout="row">
-            <!-- Dynamically rendering header menu item -->
-            <div *ngFor="let item of headerMenu">
-                <div class="header-menu-button" fxLayout="row" [matMenuTriggerFor]="trigger">
-                    <span>{{ item.title }}</span>
-                    <mat-icon inline="true">expand_more</mat-icon>
+                <span class="header-name">
+                    Jira
+                </span>
+
+            <div class="header-menu" fxLayout="row">
+                <!-- Dynamically rendering header menu item -->
+                <div *ngFor="let item of headerMenu">
+                    <div class="header-menu-button" fxLayout="row" [matMenuTriggerFor]="trigger">
+                        <span>{{ item.title }}</span>
+                        <mat-icon inline="true">expand_more</mat-icon>
+                    </div>
+
+                    <mat-menu #trigger="matMenu">
+                        <ng-container *ngFor="let menu of item.subMenu">
+
+                            <ng-container *ngIf="checkDivider(menu)">
+                                <div>
+                                    <mat-divider></mat-divider>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="!checkDivider(menu)">
+                                <button mat-menu-item>
+                                    <span>{{menu}}</span>
+                                </button>
+                            </ng-container>
+
+                        </ng-container>
+                    </mat-menu>
                 </div>
-
-                <mat-menu #trigger="matMenu">
-                    <ng-container *ngFor="let menu of item.subMenu">
-
-                        <ng-container *ngIf="checkDivider(menu)">
-                            <div>
-                                <mat-divider></mat-divider>
-                            </div>
-                        </ng-container>
-                        <ng-container *ngIf="!checkDivider(menu)">
-                            <button mat-menu-item>
-                                <span>{{menu}}</span>
-                            </button>
-                        </ng-container>
-
-                    </ng-container>
-                </mat-menu>
+                <button mat-raised-button color="primary">Create</button>
             </div>
+
+
+            <div fxLayout="row" fxLayoutAlign="end center">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-icon matPrefix>search</mat-icon>
+                        <input type="text" placeholder="Search" matInput [formControl]="searchControl"
+                            [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-optgroup *ngFor="let option of searchOptions" [label]="option.heading">
+                                <mat-option *ngFor="let name of option.content" [value]="name">
+                                    {{name}}
+                                </mat-option>
+                            </mat-optgroup>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </form>
+            </div>
+
+            <mat-icon svgIcon="export"></mat-icon>
+            <mat-icon>campaign</mat-icon>
+            <mat-icon>help</mat-icon>
         </div>
 
-        <button mat-raised-button color="primary">Create</button>
     </mat-toolbar>
 </div>
