@@ -9,11 +9,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SideDrawerComponent } from './components/mobile/side-drawer/side-drawer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    SideDrawerComponent
   ],
   imports: [
     BrowserModule,

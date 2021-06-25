@@ -1,0 +1,7 @@
+.side-nav {
+    height: 100vh;
+    ::ng-deep {
+        .mat-drawer-container {
+        }
+    }
+}

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 
 
 @Component({
@@ -86,6 +87,8 @@ export class HeaderComponent implements OnInit {
     }
   ];
 
+  _sideNavBar:boolean = false;
+
   constructor() {
   }
 
@@ -96,4 +99,11 @@ export class HeaderComponent implements OnInit {
     return checkWith === 'divider';
   }
 
+  toggleDrawer() {
+    this._sideNavBar = !this._sideNavBar;
+  }
+
+  get sideNavBar(): boolean {
+    return this._sideNavBar;
+  }
 }

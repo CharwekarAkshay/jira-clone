@@ -2,14 +2,14 @@
     <mat-toolbar color="primary">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
             <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="center center">
-                <mat-icon svgIcon="app_switcher"></mat-icon>
-
+                <mat-icon fxHide.lt-md svgIcon="app_switcher"></mat-icon>
+                <mat-icon fxShow.lt-md fxHide.gt-md (click)="toggleDrawer()">menu</mat-icon>
                 <span class="header-name">
                     Jira
                 </span>
             </div>
 
-            <div class="header-menu" fxLayout="row">
+            <div class="header-menu" fxLayout="row" fxHide.lt-md>
                 <!-- Dynamically rendering header menu item -->
                 <div *ngFor="let item of headerMenu">
                     <div class="header-menu-button" fxLayout="row" [matMenuTriggerFor]="trigger">
@@ -38,29 +38,40 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="center space-between">
-                <form class="example-form">
-                    <mat-form-field class="example-full-width" appearance="outline">
-                        <mat-icon matPrefix>search</mat-icon>
-                        <input type="text" placeholder="Search" matInput [formControl]="searchControl"
-                            [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete">
-                            <mat-optgroup *ngFor="let option of searchOptions" [label]="option.heading">
-                                <mat-option *ngFor="let name of option.content" [value]="name">
-                                    {{name}}
-                                </mat-option>
-                            </mat-optgroup>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                </form>
-
-                <mat-icon svgIcon="export"></mat-icon>
-                <mat-icon>campaign</mat-icon>
-                <mat-icon>help</mat-icon>
-                <!-- Will come from backend dynam -->
-                <img class="user-avatar" src="assets/images/user_avatar.jpg" alt="User Avatar">
+            <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxLayoutGap="20px">
+                <div>
+                    <form class="example-form">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-icon matPrefix>search</mat-icon>
+                            <input type="text" placeholder="Search" matInput [formControl]="searchControl"
+                                [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-optgroup *ngFor="let option of searchOptions" [label]="option.heading">
+                                    <mat-option *ngFor="let name of option.content" [value]="name">
+                                        {{name}}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </div>
+                <div>
+                    <mat-icon svgIcon="export"></mat-icon>
+                </div>
+                <div>
+                    <mat-icon>campaign</mat-icon>
+                </div>
+                <div>
+                    <mat-icon>help</mat-icon>
+                </div>
+                <div>
+                    <!-- Will come from backend dynamically -->
+                    <img class="user-avatar" src="assets/images/user_avatar.jpg" alt="User Avatar">
+                </div>
             </div>
         </div>
 
     </mat-toolbar>
+    <!-- Side drawer for mobile screen -->
+    <app-side-drawer [isSideNavOpen]="sideNavBar"></app-side-drawer>
 </div>
