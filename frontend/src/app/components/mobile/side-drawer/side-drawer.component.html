@@ -1,5 +1,28 @@
 <mat-drawer-container class="side-nav">
-    <mat-drawer #drawer>I'm a drawer</mat-drawer>
-    <mat-drawer-content>
-    </mat-drawer-content>
+  <mat-drawer #drawer>
+    <mat-accordion>
+      <ng-container *ngFor="let item of menu">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ item.title }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngFor="let subItem of item.subMenu">
+            <ng-container *ngIf="checkDivider(subItem)">
+              <div>
+                  <mat-divider></mat-divider>
+              </div>
+          </ng-container>
+          <ng-container *ngIf="!checkDivider(subItem)">
+              <p>{{subItem}}</p>
+          </ng-container>
+
+          </ng-container>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+  </mat-drawer>
+  <mat-drawer-content>
+  </mat-drawer-content>
 </mat-drawer-container>

@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatInputModule,
     MatCardModule,
     MatSidenavModule,
+    MatExpansionModule,
   ],
 })
 export class MaterialModule {
