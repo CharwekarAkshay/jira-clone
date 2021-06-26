@@ -1,5 +1,6 @@
 <mat-drawer-container class="side-nav">
   <mat-drawer #drawer>
+    <button mat-raised-button color="primary">Create</button>
     <mat-accordion>
       <ng-container *ngFor="let item of menu">
         <mat-expansion-panel>
@@ -11,12 +12,12 @@
           <ng-container *ngFor="let subItem of item.subMenu">
             <ng-container *ngIf="checkDivider(subItem)">
               <div>
-                  <mat-divider></mat-divider>
+                <mat-divider></mat-divider>
               </div>
-          </ng-container>
-          <ng-container *ngIf="!checkDivider(subItem)">
+            </ng-container>
+            <ng-container *ngIf="!checkDivider(subItem)">
               <p>{{subItem}}</p>
-          </ng-container>
+            </ng-container>
 
           </ng-container>
         </mat-expansion-panel>
