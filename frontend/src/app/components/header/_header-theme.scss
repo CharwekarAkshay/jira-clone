@@ -13,7 +13,9 @@
   .mat-menu-item:hover:not([disabled]),
   .mat-menu-item.cdk-program-focused:not([disabled]),
   .mat-menu-item.cdk-keyboard-focused:not([disabled]),
-  .mat-menu-item-highlighted:not([disabled]) {
+  .mat-menu-item-highlighted:not([disabled]),
+  .mat-option:hover:not(.mat-option-disabled),
+  .mat-option:focus:not(.mat-option-disabled) {
     background: mat.get-color-from-palette($primary-pallette, main) !important;
     color: #fff;
   }
