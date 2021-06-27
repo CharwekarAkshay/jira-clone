@@ -31,6 +31,7 @@ export class MaterialModule {
   customIcons: Array<[string, string]> = [
     ['app_switcher', 'assets/icons/app_switcher.svg'],
     ['export', 'assets/icons/export.svg'],
+    ['logo', 'assets/icons/logo.svg'],
   ];
 
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {

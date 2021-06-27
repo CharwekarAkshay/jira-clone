@@ -1,12 +1,33 @@
 <div class="header">
     <mat-toolbar color="primary">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-            <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutGap="10" fxLayoutAlign.gt-md="center center"
+                fxLayoutAlign.lt-md="space-between center" fxFlex.lt-md>
                 <mat-icon fxHide.lt-md svgIcon="app_switcher"></mat-icon>
                 <mat-icon fxShow.lt-md fxHide.gt-md (click)="toggleDrawer()">menu</mat-icon>
-                <span class="header-name">
+                <span fxHide.lt-md class="header-name">
                     Jira
                 </span>
+                <div fxHide.gt-md>
+                    <form class="example-form">
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <mat-icon matPrefix>search</mat-icon>
+                            <input type="text" placeholder="Search" matInput [formControl]="searchControl"
+                                [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-optgroup *ngFor="let option of searchOptions" [label]="option.heading">
+                                    <mat-option *ngFor="let name of option.content" [value]="name">
+                                        {{name}}
+                                    </mat-option>
+                                </mat-optgroup>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </form>
+                </div>
+                <div fxLayout="row" fxHide.gt-md>
+                    <!-- Will come from backend dynamically -->
+                    <img class="user-avatar" src="assets/images/user_avatar.jpg" alt="User Avatar">
+                </div>
             </div>
 
             <div class="header-menu" fxLayout="row" fxHide.lt-md>
@@ -38,7 +59,7 @@
             </div>
 
 
-            <div fxLayout="row" fxLayoutAlign="end center" fxFlex fxLayoutGap="20px">
+            <div fxLayout="row" fxLayoutAlign.gt-md="end center" fxFlex fxLayoutGap="20px" fxHide.lt-md>
                 <div>
                     <form class="example-form">
                         <mat-form-field class="example-full-width" appearance="outline">
@@ -55,16 +76,16 @@
                         </mat-form-field>
                     </form>
                 </div>
-                <div>
+                <div fxHide.lt-md>
                     <mat-icon svgIcon="export"></mat-icon>
                 </div>
-                <div>
+                <div fxHide.lt-md>
                     <mat-icon>campaign</mat-icon>
                 </div>
-                <div>
+                <div fxHide.lt-md>
                     <mat-icon>help</mat-icon>
                 </div>
-                <div>
+                <div fxLayout="row">
                     <!-- Will come from backend dynamically -->
                     <img class="user-avatar" src="assets/images/user_avatar.jpg" alt="User Avatar">
                 </div>
