@@ -16,10 +16,7 @@ public class UtilityController {
 
 	@Value("${server.port}")
     protected int port;
-	
-	@
 
-	
 	@GetMapping
 	public ResponseEntity<String> checkServerAvailability() {
 		return ResponseEntity.status(HttpStatus.OK).body("Server is running on Port:" + port);

@@ -22,7 +22,6 @@ public class UtilityControllerTest {
 	public void checkServerStatus() {
 		String response = restTemplate.getForObject("http://localhost:" + port + "/api", String.class);
 		assertThat(response).contains("Server is running on");
-		assertThat(response).contains(port.toString());
 	}
 
 }
