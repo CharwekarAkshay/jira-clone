@@ -31,4 +31,10 @@ public class ProjectController {
                 .status(HttpStatus.CREATED)
                 .body(projectService.createProject(projectRequestDTO));
     }
+
+    @GetMapping("/already_exist/{projectKey}")
+    private ResponseEntity<Boolean> checkIfProjectKeyAlreadyExist(@Valid @PathVariable String projectKey) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(projectService.checkIfProjectKeyAlreadyExist(projectKey));
+    }
 }

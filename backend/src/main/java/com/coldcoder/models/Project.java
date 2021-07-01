@@ -25,7 +25,7 @@ public class Project {
 	
 	@NotBlank(message = "Project key cannot be empty")
 	@Size(min = 3, max = 5)
-	@Column(length = 5)
+	@Column(length = 5, unique = true)
 	private String projectKey;
 	
 	@NotNull(message = "Project key creation time cannot be null")
