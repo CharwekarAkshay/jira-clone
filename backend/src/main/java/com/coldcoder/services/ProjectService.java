@@ -5,22 +5,22 @@ import com.coldcoder.models.dto.ProjectRequestDTO;
 import com.coldcoder.models.dto.ProjectResponseDTO;
 import com.coldcoder.repositories.ProjectRepositories;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class ProjectService {
 
     private ProjectRepositories projectRepositories;
 
+    @Transactional
     public ProjectResponseDTO createProject(ProjectRequestDTO projectRequestDTO) {
         Project newProject = new Project();
         newProject.setProjectName(projectRequestDTO.getProjectName());
-        newProject.setProjectName(projectRequestDTO.getProjectName());
+        newProject.setProjectKey(projectRequestDTO.getProjectKey());
         newProject.setCreatedAt(Instant.now());
         Project project = projectRepositories.save(newProject);
 

@@ -4,6 +4,7 @@ import java.time.Instant;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class Project {
 	@Column(length = 5)
 	private String projectKey;
 	
-	@NotBlank(message = "Project key creation time cannot be empty")
+	@NotNull(message = "Project key creation time cannot be null")
 	private Instant createdAt;
 }
 	
