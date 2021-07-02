@@ -25,6 +25,13 @@ public class ProjectController {
                 .status(HttpStatus.OK)
                 .body(projectService.getAllProjects());
     }
+    
+    @DeleteMapping
+    public ResponseEntity<ProjectResponseDTO> deleteProject(@Valid @PathVariable String projectKey) {
+    	return ResponseEntity
+    			.status(HttpStatus.ACCEPTED)
+    			.body(projectService.deleteProjectByProjectKey(projectKey));
+    }
 
     @PostMapping
     public ResponseEntity<ProjectResponseDTO> createProject(@Valid @RequestBody ProjectRequestDTO projectRequestDTO) {
