@@ -2,6 +2,7 @@ package com.coldcoder.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.coldcoder.models.dto.AlreadyExist;
 import com.coldcoder.models.dto.ProjectRequestDTO;
 import com.coldcoder.models.dto.ProjectResponseDTO;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 
@@ -53,5 +57,14 @@ public class ProjectControllerTest {
         assertThat(projectResponseDTO.getCreatedAt()).isNotNull();
         assertThat(projectResponseDTO.getProjectName()).isEqualTo(projectName);
         assertThat(projectResponseDTO.getProjectKey()).isEqualTo(projectKey);
+    }
+    
+    @Test
+    public void checkUniquenessOfProjectKey() {
+        String projectKey = "FPR";
+        String URL = url + port + "/already_exist";
+        ResponseEntity<AlreadyExist> alreadyExistResponseEntity= restTemplate.getForEntity(URL, AlreadyExist.class, projectKey);
+        AlreadyExist alreadyExist = alreadyExistResponseEntity.getBody();
+        assertThat(alreadyExist.getExist()).isTrue();
     }
 }

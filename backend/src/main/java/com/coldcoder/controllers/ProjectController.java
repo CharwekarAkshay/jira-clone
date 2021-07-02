@@ -1,5 +1,6 @@
 package com.coldcoder.controllers;
 
+import com.coldcoder.models.dto.AlreadyExist;
 import com.coldcoder.models.dto.ProjectRequestDTO;
 import com.coldcoder.models.dto.ProjectResponseDTO;
 import com.coldcoder.services.ProjectService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/projects")
@@ -18,11 +20,10 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public ResponseEntity<String[]> getProjects() {
-        String[] projects = {"Porject1", "Project2"};
+    public ResponseEntity<List<ProjectResponseDTO>> getProjects() {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(projects);
+                .body(projectService.getAllProjects());
     }
 
     @PostMapping
@@ -32,8 +33,8 @@ public class ProjectController {
                 .body(projectService.createProject(projectRequestDTO));
     }
 
-    @GetMapping("/already_exist/{projectKey}")
-    private ResponseEntity<Boolean> checkIfProjectKeyAlreadyExist(@Valid @PathVariable String projectKey) {
+    @GetMapping(value = "/already_exist/{projectKey}", produces = "application/json")
+    private ResponseEntity<AlreadyExist> checkIfProjectKeyAlreadyExist(@Valid @PathVariable String projectKey) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(projectService.checkIfProjectKeyAlreadyExist(projectKey));
     }
