@@ -41,14 +41,14 @@
                     <mat-menu #trigger="matMenu">
                         <ng-container *ngFor="let menu of item.subMenu">
 
-                            <ng-container *ngIf="checkDivider(menu)">
+                            <ng-container *ngIf="checkDivider(menu.name)">
                                 <div>
                                     <mat-divider></mat-divider>
                                 </div>
                             </ng-container>
-                            <ng-container *ngIf="!checkDivider(menu)">
-                                <button mat-menu-item>
-                                    <span>{{menu}}</span>
+                            <ng-container *ngIf="!checkDivider(menu.name)">
+                                <button mat-menu-item appRot [routerLink]="menu.route">
+                                    <span>{{menu.name}}</span>
                                 </button>
                             </ng-container>
 
