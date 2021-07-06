@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SideDrawerComponent } from './components/mobile/side-drawer/side-drawer.component';
 import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { PrimeNgModule } from './primeng.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CreateProjectComponent } from './components/create-project/create-proje
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    PrimeNgModule,
     FlexLayoutModule,
     HttpClientModule,
     ReactiveFormsModule,

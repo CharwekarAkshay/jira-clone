@@ -94,5 +94,5 @@
 
     </mat-toolbar>
     <!-- Side drawer for mobile screen -->
-    <app-side-drawer [isSideNavOpen]="sideNavBar" [menu]="headerMenu"></app-side-drawer>
+    <app-side-drawer [isSideNavOpen]="sideNavBar" [menu]="headerMenu" fxShow.lt-md fxHide.gt-md></app-side-drawer>
 </div>

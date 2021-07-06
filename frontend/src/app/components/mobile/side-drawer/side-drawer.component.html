@@ -1,36 +1,31 @@
-<mat-drawer-container class="side-nav">
-  <mat-drawer #drawer>
-    <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
-      <div>
-        <h2><mat-icon svgIcon="logo"></mat-icon>Jira</h2>
-      </div>
-      <button mat-raised-button color="primary">Create</button>
-      <div>
-        <mat-accordion>
-          <ng-container *ngFor="let item of menu">
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{ item.title }}
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <ng-container *ngFor="let subItem of item.subMenu">
-                <ng-container *ngIf="checkDivider(subItem)">
-                  <div>
-                    <mat-divider></mat-divider>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="!checkDivider(subItem)">
-                  <p>{{subItem}}</p>
-                </ng-container>
-
-              </ng-container>
-            </mat-expansion-panel>
-          </ng-container>
-        </mat-accordion>
-      </div>
+<p-sidebar [(visible)]="isSideNavOpen" styleClass="p-sidebar-sm">
+  <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="10px">
+    <div>
+      <h2><mat-icon svgIcon="logo"></mat-icon>Jira</h2>
     </div>
-  </mat-drawer>
-  <mat-drawer-content>
-  </mat-drawer-content>
-</mat-drawer-container>
+    <button mat-raised-button color="primary">Create</button>
+    <div>
+      <mat-accordion>
+        <ng-container *ngFor="let item of menu">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ item.title }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngFor="let subItem of item.subMenu">
+              <ng-container *ngIf="checkDivider(subItem.name)">
+                <div>
+                  <mat-divider></mat-divider>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!checkDivider(subItem.name)">
+                <p [routerLink]="subItem.route">{{subItem.name}}</p>
+              </ng-container>
+            </ng-container>
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-accordion>
+    </div>
+  </div>
+</p-sidebar>

@@ -25,6 +25,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatCardModule,
     MatSidenavModule,
     MatExpansionModule,
+    MatCardModule,
   ],
 })
 export class MaterialModule {
