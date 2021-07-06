@@ -7,22 +7,13 @@ import { HeaderMenuItem } from 'src/app/types/HeaderMenuItem';
   templateUrl: './side-drawer.component.html',
   styleUrls: ['./side-drawer.component.scss'],
 })
-export class SideDrawerComponent implements OnInit, OnChanges {
+export class SideDrawerComponent implements OnInit{
   @Input() isSideNavOpen: boolean = false;
   @Input() menu: Array<HeaderMenuItem> = [];
-  @ViewChild('drawer') sideDrawer?: MatDrawer;
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  ngOnChanges(): void {
-    if (this.isSideNavOpen) {
-      this.sideDrawer?.open();
-    } else {
-      this.sideDrawer?.close();
-    }
-  }
 
   checkDivider(checkWith: string): boolean {
     return checkWith === 'divider';
