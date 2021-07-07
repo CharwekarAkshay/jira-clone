@@ -18,5 +18,5 @@ public abstract class ProjectMapper {
 
     @Mapping(target = "projectName", source = "projectRequestDTO.projectName")
     @Mapping(target = "projectKey", source = "projectRequestDTO.projectKey")
-    public abstract Project mapProjectRequestDTOTOProject(ProjectRequestDTO projectRequestDTO);
+    public abstract Project mapProjectRequestDTOToProject(ProjectRequestDTO projectRequestDTO);
 }
