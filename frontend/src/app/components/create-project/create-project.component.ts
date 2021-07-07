@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProjectService } from 'src/app/services/project.service';
+import { CreateProject } from 'src/app/types/CreateProject';
 
 @Component({
   selector: 'app-create-project',
@@ -12,7 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class CreateProjectComponent implements OnInit {
   createProjectFormGroup: FormGroup;
 
-  constructor() {
+  constructor(private projectService: ProjectService) {
     this.createProjectFormGroup = new FormGroup({
       projectName: new FormControl(null, [Validators.required]),
       projectKey: new FormControl(null, [
@@ -24,4 +26,14 @@ export class CreateProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  createProject(): void {
+    const values = this.createProjectFormGroup.value;
+    const createProject: CreateProject = {
+      projectKey: values['projectKey'],
+      projectName: values['projectName'],
+    }
+
+    this.projectService.createProject(createProject);
+  }
 }

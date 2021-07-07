@@ -29,6 +29,7 @@ import { PrimeNgModule } from './primeng.module';
     FlexLayoutModule,
     HttpClientModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutAlign="center stretch">
     <div fxFlex>
         <mat-card>
-            <form class="create-project" [formGroup]="createProjectFormGroup">
+            <form class="create-project" [formGroup]="createProjectFormGroup" (ngSubmit)="createProject()">
                 <div fxLayout="column">
                     <h3>Create Project</h3>
                     <mat-form-field appearance="fill">
