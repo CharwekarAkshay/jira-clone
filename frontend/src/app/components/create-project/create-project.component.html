@@ -1,3 +1,20 @@
-<mat-card>
-    
-</mat-card>
+<div fxLayout="column" fxLayoutAlign="center stretch">
+    <div fxFlex>
+        <mat-card>
+            <form class="create-project" [formGroup]="createProjectFormGroup">
+                <div fxLayout="column">
+                    <h3>Create Project</h3>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Project Name</mat-label>
+                        <input type="text" matInput formControlName="projectName" placeholder="Project Name">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Project Key</mat-label>
+                        <input type="text" matInput formControlName="projectKey" placeholder="Project Key">
+                    </mat-form-field>
+                    <button type="submit" mat-raised-button color="primary">Create Project</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>
