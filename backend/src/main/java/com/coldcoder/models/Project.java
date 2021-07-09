@@ -1,6 +1,8 @@
 package com.coldcoder.models;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -30,5 +32,8 @@ public class Project {
 	
 	@NotNull(message = "Project key creation time cannot be null")
 	private Instant createdAt;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<ProjectResource> projectResources = new ArrayList<>();
 }
 	
