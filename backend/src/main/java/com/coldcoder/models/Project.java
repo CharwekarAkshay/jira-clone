@@ -33,7 +33,7 @@ public class Project {
 	@NotNull(message = "Project key creation time cannot be null")
 	private Instant createdAt;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<ProjectResource> projectResources = new ArrayList<>();
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	private List<ProjectResource> projectResources = new ArrayList<>();
 }
 	

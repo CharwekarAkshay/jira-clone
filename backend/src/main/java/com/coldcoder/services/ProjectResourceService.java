@@ -1,70 +1,94 @@
 package com.coldcoder.services;
 
+import com.coldcoder.exceptions.ProjectResourceException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import com.coldcoder.exceptions.ProjectResourceException;
-import com.coldcoder.models.ProjectResource;
-import com.coldcoder.repositories.ProjectRepositories;
-import com.coldcoder.repositories.ProjectResourceRepositories;
-
-import org.hibernate.validator.internal.metadata.location.TypeArgumentConstraintLocation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+import java.util.stream.Stream;
 
 @Service
 public class ProjectResourceService {
+    private final Path rootLocation;
 
     @Value("${application.project.files.location}")
-    private String projectResourceLocation;
+    private String location;
 
-    private final Path fileStoragePath;
+    public ProjectResourceService() {
+        if (location == null) {
+            location = "project_assets";
+        }
+        this.rootLocation = Paths.get(location);
+    }
 
-    private ProjectResourceRepositories projectResourceRepositories;
+    public void deleteAll() {
+        FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
 
-    @Autowired
-    public ProjectResourceService(ProjectResourceRepositories projectResourceRepositories,
-            ProjectResource projectResource) {
-        this.projectResourceRepositories = projectResourceRepositories;
-        this.fileStoragePath = Paths.get(projectResourceLocation).toAbsolutePath().normalize();
-
+    public void init() {
         try {
-            Files.createDirectories(this.fileStoragePath);
+            Files.createDirectories(rootLocation);
         } catch (IOException exception) {
-            throw new ProjectResourceException("Cannot create directory for storing images.", exception);
+            throw new ProjectResourceException("Could not initialize storage", exception);
         }
     }
 
-    public String storeFile(MultipartFile file, String documentType, Long projectId, String projectKey) {
-        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-        String fileName = "";
-
+    public void store(MultipartFile file) {
         try {
-            if (originalFileName.contains("..")) {
-                throw new ProjectResourceException("Filename contain invalid path sequence " + originalFileName);
+            if (file.isEmpty()) {
+                throw new ProjectResourceException("Failed to store empty file");
             }
-            String fileExtension = "";
-            try {
-                fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-            } catch (Exception exception) {
-                fileExtension = "";
+            Path destinationFile = this.rootLocation.resolve(
+                    Paths.get(file.getOriginalFilename()))
+                    .normalize().toAbsolutePath();
+            if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+                throw new ProjectResourceException("Cannot store file outside directory");
             }
 
-            fileName = projectId + "_" + projectKey + "_" + documentType + fileExtension;
-            Path targetLocation = this.fileStoragePath.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            
-
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+            }
         } catch (IOException exception) {
-            throw new ProjectResourceException("Could not store file " + fileName + ". Please try again!", exception);
+            throw new ProjectResourceException("Failed to store file", exception);
         }
+    }
 
-        return "";
+    public Path load(String fileName) {
+        return rootLocation.resolve(fileName);
+    }
+
+    public Resource loadAsResource(String fileName) {
+        try {
+            Path file = load(fileName);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new ProjectResourceException("Could not read file: " + fileName);
+            }
+        } catch (MalformedURLException exception) {
+            throw new ProjectResourceException("Could not read file: " + fileName, exception);
+        }
+    }
+
+    public Stream<Path> loadAll() {
+        try {
+            return Files.walk(this.rootLocation, 1)
+                    .filter(path -> !path.equals(this.rootLocation))
+                    .map(this.rootLocation::relativize);
+        } catch (IOException exception) {
+            throw new ProjectResourceException("Failed to read stored files", exception);
+        }
     }
 }
