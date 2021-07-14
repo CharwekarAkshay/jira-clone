@@ -1,6 +1,12 @@
 package com.coldcoder.services;
 
 import com.coldcoder.exceptions.ProjectResourceException;
+import com.coldcoder.models.Project;
+import com.coldcoder.models.ProjectResource;
+import com.coldcoder.models.dto.ProjectResourceRequestDTO;
+import com.coldcoder.repositories.ProjectRepository;
+import com.coldcoder.repositories.ProjectResourceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,16 +26,22 @@ import java.util.stream.Stream;
 
 @Service
 public class ProjectResourceService {
-    private final Path rootLocation;
+    private Path rootLocation;
 
     @Value("${application.project.files.location}")
     private String location;
 
-    public ProjectResourceService() {
+    ProjectResourceRepository projectResourceRepository;
+    ProjectRepository projectRepository;
+
+    @Autowired
+    public ProjectResourceService(ProjectResourceRepository projectResourceRepository, ProjectRepository projectRepository) {
         if (location == null) {
             location = "project_assets";
         }
         this.rootLocation = Paths.get(location);
+        this.projectResourceRepository = projectResourceRepository;
+        this.projectRepository = projectRepository;
     }
 
     public void deleteAll() {
@@ -44,13 +56,25 @@ public class ProjectResourceService {
         }
     }
 
-    public void store(MultipartFile file) {
+    public void store(ProjectResourceRequestDTO projectResourceRequestDTO) {
+        MultipartFile file = projectResourceRequestDTO.getFile();
         try {
             if (file.isEmpty()) {
                 throw new ProjectResourceException("Failed to store empty file");
             }
+            // * Checking if the project exist or not
+            Project project = projectRepository.getByProjectKey(projectResourceRequestDTO.getProjectKey());
+
+            if (project == null)
+                throw new ProjectResourceException("Can't save project project not present with key:"
+                        + projectResourceRequestDTO.getProjectKey());
+
+
+            this.rootLocation = this.rootLocation.resolve(Paths.get(project.getProjectName())).normalize().toAbsolutePath();
+
+            String originalFileName = file.getOriginalFilename();
             Path destinationFile = this.rootLocation.resolve(
-                    Paths.get(file.getOriginalFilename()))
+                    Paths.get(originalFileName))
                     .normalize().toAbsolutePath();
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new ProjectResourceException("Cannot store file outside directory");
@@ -59,6 +83,16 @@ public class ProjectResourceService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }
+
+
+            // Store file in database
+            ProjectResource projectResource = new ProjectResource();
+            projectResource.setFileName(originalFileName);
+            projectResource.setDocumentType(file.getContentType());
+            projectResource.setUploadDir(destinationFile.toString());
+            projectResource.setProject(project);
+            projectResourceRepository.save(projectResource);
+
         } catch (IOException exception) {
             throw new ProjectResourceException("Failed to store file", exception);
         }
