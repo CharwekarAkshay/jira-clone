@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -84,7 +85,7 @@ public class ProjectResourceService {
 
 			// Create root location for saving file
 			log.info("Creating root path for file");
-			Path rootLocation = Paths.get(this.location.concat(project.getProjectName()));
+			Path rootLocation = Paths.get(this.location+ "\\" + project.getProjectName());
 			log.info("File root location created");
 			
 			log.info("Createing Root directory for file");
