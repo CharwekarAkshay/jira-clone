@@ -101,19 +101,24 @@ public class ProjectResourceService {
 			if (!destinationFile.getParent().equals(rootLocation.toAbsolutePath())) {
 				throw new ProjectResourceException("Cannot store file outside directory");
 			}
-
+			
+			log.info("Copying file to project destination");
 			try (InputStream inputStream = file.getInputStream()) {
 				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
 			}
-
+			log.info("Successfully copied file to a project destination");
+			
 			// Store file in database
+			log.info("Saving file detials in database");
 			ProjectResource projectResource = new ProjectResource();
 			projectResource.setFileName(originalFileName);
 			projectResource.setDocumentType(file.getContentType());
 			projectResource.setUploadDir(destinationFile.toString());
 			projectResource.setProject(project);
 			projectResourceRepository.save(projectResource);
-
+			log.info("Saved all the details in database");
+			
+			'
 		} catch (IOException exception) {
 			throw new ProjectResourceException("Failed to store file", exception);
 		}
