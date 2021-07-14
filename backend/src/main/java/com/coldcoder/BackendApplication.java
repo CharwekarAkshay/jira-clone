@@ -14,11 +14,11 @@ public class BackendApplication {
 	}
 
 	
-	@Bean
-	CommandLineRunner init(ProjectResourceService projectResourceService) {
-		return (args) -> {
-			projectResourceService.deleteAll();
-			projectResourceService.init();
-		};
-	}
+//	@Bean
+//	CommandLineRunner init(ProjectResourceService projectResourceService) {
+//		return (args) -> {
+//			projectResourceService.deleteAll();
+//			projectResourceService.init();
+//		};
+//	}
 }
