@@ -18,7 +18,7 @@ app.use(helmet());
 
 const route = require('./routes/index');
 
-app.use(route);
+app.use("/api",route);
 
 app.use((err, req, res, next) => {
     logger.error(`${err}`);
